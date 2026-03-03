@@ -30,6 +30,3 @@ All contact data is stored in a text file (`contacts.txt`).
 - Input/Output
 - File Handling
 
----
-
-## 📂 Project Structure
