@@ -1,32 +1,41 @@
 # 📞 Command-Line Contact Book Application
 
-## 📌 Project Description
+## 📌 Project Overview
 
-This is a beginner-level Python project built as part of Python Fundamentals learning.
+The Command-Line Contact Book Application is a beginner-level Python project developed as part of Python Fundamentals learning.
 
-The application allows users to:
+This project demonstrates core programming concepts such as:
 
-- Add new contacts
-- View saved contacts
-- Search for contacts by name
+- Variables & Data Types
+- Conditionals (if-elif-else)
+- Loops (for, while)
+- Functions
+- File Handling
+- Basic Software Testing Documentation
 
-All contact data is stored in a text file (`contacts.txt`).
+The application allows users to store and manage contact details using a text file for persistent storage.
+
+---
+
+## 🎯 Features
+
+✅ Add New Contact  
+✅ View All Contacts  
+✅ Search Contact by Name  
+✅ Data stored in text file (`contacts.txt`)  
+✅ Menu-driven interface  
+✅ Continuous execution using loop  
+✅ Proper modular structure using functions  
 
 ---
 
 ## 🛠 Technologies Used
 
-- Python 3
-- File Handling
-- Command Line Interface
+- Python 3.x
+- Command Line Interface (CLI)
+- File Handling (Text File Storage)
+- Manual Testing Documentation
 
 ---
 
-## 📚 Concepts Covered
-
-- Variables & Data Types
-- Conditionals (if-elif-else)
-- Loops (while, for)
-- Input/Output
-- File Handling
-
+## 📂 Project Structure
