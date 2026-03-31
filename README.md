@@ -1,41 +1,40 @@
-# 📞 Command-Line Contact Book Application
+# 💼 6-Month Python Internship Projects
 
-## 📌 Project Overview
+## 📌 Overview
 
-The Command-Line Contact Book Application is a beginner-level Python project developed as part of Python Fundamentals learning.
+This repository contains projects and tasks completed during my **6-month internship** in Python development.
 
-This project demonstrates core programming concepts such as:
-
-- Variables & Data Types
-- Conditionals (if-elif-else)
-- Loops (for, while)
-- Functions
-- File Handling
-- Basic Software Testing Documentation
-
-The application allows users to store and manage contact details using a text file for persistent storage.
-
----
-
-## 🎯 Features
-
-✅ Add New Contact  
-✅ View All Contacts  
-✅ Search Contact by Name  
-✅ Data stored in text file (`contacts.txt`)  
-✅ Menu-driven interface  
-✅ Continuous execution using loop  
-✅ Proper modular structure using functions  
+The internship focuses on improving skills in:
+- Python Programming
+- Web Development (Flask)
+- Database Handling
+- Software Testing Basics
 
 ---
 
 ## 🛠 Technologies Used
 
-- Python 3.x
-- Command Line Interface (CLI)
-- File Handling (Text File Storage)
-- Manual Testing Documentation
+- Python
+- Flask
+- HTML, CSS, JavaScript
+- SQLite
+- Git & GitHub
 
 ---
 
-## 📂 Project Structure
+## 📂 Projects Included
+
+### 1️⃣ Contact Book Application
+- Add, view, and search contacts
+- File handling using Python
+
+### 2️⃣ Online Feedback Collector
+- User feedback form
+- Admin dashboard
+- Database integration
+
+---
+
+## ▶️ How to Run
+
+1. Clone the repository:
