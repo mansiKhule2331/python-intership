@@ -38,3 +38,32 @@ The internship focuses on improving skills in:
 ## ▶️ How to Run
 
 1. Clone the repository:
+https://github.com/mansiKhule2331/python-intership.git
+
+
+2. Go to project folder:
+cd python-internship
+
+3. Run Python file:python app.py
+
+---
+
+## 📈 Learning Outcomes
+
+- Improved Python fundamentals
+- Built real-world projects
+- Learned basic software testing
+- Understood full-stack development basics
+
+---
+
+## 👩‍💻 Author
+
+Mansi Khule  
+Python Developer  
+
+---
+
+## ⭐ Note
+
+This repository is part of my internship learning journey.
