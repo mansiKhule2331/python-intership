@@ -1,0 +1,398 @@
+{
+  "info": {
+    "name": "Bookstore Management System API",
+    "description": "Complete collection for the Bookstore Management System REST API (Auth, Books, Reviews, Wishlist, Orders).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000/api/v1" },
+    { "key": "access_token", "value": "" },
+    { "key": "refresh_token", "value": "" },
+    { "key": "admin_access_token", "value": "" },
+    { "key": "book_id", "value": "1" },
+    { "key": "order_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"StrongPass123\",\n  \"password2\": \"StrongPass123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/register/", "host": ["{{base_url}}"], "path": ["auth", "register", ""] }
+          }
+        },
+        {
+          "name": "Login (Customer)",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const data = pm.response.json();",
+                "if (data.access) { pm.collectionVariables.set('access_token', data.access); }",
+                "if (data.refresh) { pm.collectionVariables.set('refresh_token', data.refresh); }"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane@example.com\",\n  \"password\": \"StrongPass123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/login/", "host": ["{{base_url}}"], "path": ["auth", "login", ""] }
+          }
+        },
+        {
+          "name": "Login (Admin)",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "const data = pm.response.json();",
+                "if (data.access) { pm.collectionVariables.set('admin_access_token', data.access); }"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@bookstore.com\",\n  \"password\": \"AdminPass123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/login/", "host": ["{{base_url}}"], "path": ["auth", "login", ""] }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/auth/refresh/", "host": ["{{base_url}}"], "path": ["auth", "refresh", ""] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/auth/logout/", "host": ["{{base_url}}"], "path": ["auth", "logout", ""] }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/auth/profile/", "host": ["{{base_url}}"], "path": ["auth", "profile", ""] }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"full_name\": \"Jane A. Doe\"\n}" },
+            "url": { "raw": "{{base_url}}/auth/profile/", "host": ["{{base_url}}"], "path": ["auth", "profile", ""] }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"old_password\": \"StrongPass123\",\n  \"new_password\": \"NewStrongPass456\",\n  \"new_password2\": \"NewStrongPass456\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/auth/change-password/", "host": ["{{base_url}}"], "path": ["auth", "change-password", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "List Books (search/filter/order/paginate)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": {
+              "raw": "{{base_url}}/books/?search=python&genre=Programming&ordering=price&page=1&page_size=10",
+              "host": ["{{base_url}}"],
+              "path": ["books", ""],
+              "query": [
+                { "key": "search", "value": "python" },
+                { "key": "genre", "value": "Programming" },
+                { "key": "ordering", "value": "price" },
+                { "key": "page", "value": "1" },
+                { "key": "page_size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Retrieve Book",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/{{book_id}}/", "host": ["{{base_url}}"], "path": ["books", "{{book_id}}", ""] }
+          }
+        },
+        {
+          "name": "Create Book (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Fluent Python\",\n  \"author\": \"Luciano Ramalho\",\n  \"genre\": \"Programming\",\n  \"isbn\": \"9781492056355\",\n  \"price\": \"55.00\",\n  \"description\": \"A deep dive into idiomatic Python.\",\n  \"stock_quantity\": 10,\n  \"cover_image_url\": \"https://example.com/cover.jpg\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/books/", "host": ["{{base_url}}"], "path": ["books", ""] }
+          }
+        },
+        {
+          "name": "Update Book (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Fluent Python (2nd Edition)\",\n  \"author\": \"Luciano Ramalho\",\n  \"genre\": \"Programming\",\n  \"isbn\": \"9781492056355\",\n  \"price\": \"60.00\",\n  \"stock_quantity\": 8\n}"
+            },
+            "url": { "raw": "{{base_url}}/books/{{book_id}}/", "host": ["{{base_url}}"], "path": ["books", "{{book_id}}", ""] }
+          }
+        },
+        {
+          "name": "Partial Update Book (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"stock_quantity\": 15\n}" },
+            "url": { "raw": "{{base_url}}/books/{{book_id}}/", "host": ["{{base_url}}"], "path": ["books", "{{book_id}}", ""] }
+          }
+        },
+        {
+          "name": "Delete Book (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/{{book_id}}/", "host": ["{{base_url}}"], "path": ["books", "{{book_id}}", ""] }
+          }
+        },
+        {
+          "name": "Recently Added Books",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/recently-added/", "host": ["{{base_url}}"], "path": ["books", "recently-added", ""] }
+          }
+        },
+        {
+          "name": "Reviews for a Book",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/{{book_id}}/reviews/", "host": ["{{base_url}}"], "path": ["books", "{{book_id}}", "reviews", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "List Reviews",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/reviews/", "host": ["{{base_url}}"], "path": ["books", "reviews", ""] }
+          }
+        },
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"book\": {{book_id}},\n  \"rating\": 5,\n  \"comment\": \"Excellent read!\"\n}" },
+            "url": { "raw": "{{base_url}}/books/reviews/", "host": ["{{base_url}}"], "path": ["books", "reviews", ""] }
+          }
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 4,\n  \"comment\": \"Updated thoughts.\"\n}" },
+            "url": { "raw": "{{base_url}}/books/reviews/1/", "host": ["{{base_url}}"], "path": ["books", "reviews", "1", ""] }
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/reviews/1/", "host": ["{{base_url}}"], "path": ["books", "reviews", "1", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "List Wishlist",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/wishlist/", "host": ["{{base_url}}"], "path": ["books", "wishlist", ""] }
+          }
+        },
+        {
+          "name": "Add to Wishlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"book\": {{book_id}}\n}" },
+            "url": { "raw": "{{base_url}}/books/wishlist/", "host": ["{{base_url}}"], "path": ["books", "wishlist", ""] }
+          }
+        },
+        {
+          "name": "Remove from Wishlist",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/books/wishlist/1/", "host": ["{{base_url}}"], "path": ["books", "wishlist", "1", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "List Orders (own / all for admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/orders/?status=PENDING", "host": ["{{base_url}}"], "path": ["orders", ""], "query": [{ "key": "status", "value": "PENDING" }] }
+          }
+        },
+        {
+          "name": "Place Order (Customer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{access_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipping_address\": \"221B Baker Street, London\",\n  \"items\": [\n    { \"book\": {{book_id}}, \"quantity\": 2 }\n  ]\n}"
+            },
+            "url": { "raw": "{{base_url}}/orders/", "host": ["{{base_url}}"], "path": ["orders", ""] }
+          }
+        },
+        {
+          "name": "Retrieve Order",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/orders/{{order_id}}/", "host": ["{{base_url}}"], "path": ["orders", "{{order_id}}", ""] }
+          }
+        },
+        {
+          "name": "Own Order History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/orders/history/", "host": ["{{base_url}}"], "path": ["orders", "history", ""] }
+          }
+        },
+        {
+          "name": "Update Order Status (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{admin_access_token}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"SHIPPED\",\n  \"payment_status\": \"PAID\"\n}" },
+            "url": { "raw": "{{base_url}}/orders/{{order_id}}/", "host": ["{{base_url}}"], "path": ["orders", "{{order_id}}", ""] }
+          }
+        },
+        {
+          "name": "Cancel Order (Customer)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": { "raw": "{{base_url}}/orders/{{order_id}}/", "host": ["{{base_url}}"], "path": ["orders", "{{order_id}}", ""] }
+          }
+        },
+        {
+          "name": "Delete Order (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{admin_access_token}}" }],
+            "url": { "raw": "{{base_url}}/orders/{{order_id}}/", "host": ["{{base_url}}"], "path": ["orders", "{{order_id}}", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Documentation",
+      "item": [
+        {
+          "name": "OpenAPI Schema",
+          "request": { "method": "GET", "url": "http://127.0.0.1:8000/api/schema/" }
+        },
+        {
+          "name": "Swagger UI",
+          "request": { "method": "GET", "url": "http://127.0.0.1:8000/api/docs/" }
+        },
+        {
+          "name": "Redoc",
+          "request": { "method": "GET", "url": "http://127.0.0.1:8000/api/redoc/" }
+        }
+      ]
+    }
+  ]
+}
