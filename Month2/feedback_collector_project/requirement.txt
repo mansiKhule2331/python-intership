@@ -1,0 +1,39 @@
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+Navigate to project folder:
+cd feedback-collector_project
+
+---
+
+### 2️⃣ Create Virtual Environment (Recommended)
+python -m venv venv
+
+Activate environment:
+
+Windows:
+venv\Scripts\activate
+
+Mac/Linux:
+source venv/bin/activate
+
+---
+
+### 3️⃣ Install Dependencies
+pip install flask
+
+(Optional libraries)
+pip install pandas matplotlib
+
+---
+
+### 4️⃣ Run the Application
+python app.py
+
+Open browser:
+
+http://127.0.0.1:5000

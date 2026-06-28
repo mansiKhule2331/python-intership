@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Bookstore Management System API
 
 A complete, production-ready REST API for a bookstore, built with **Django REST Framework** and **PostgreSQL**. It supports JWT authentication, role-based access control (Admin / Customer), full book and order management with automatic inventory tracking, search, filtering, pagination, Swagger/Redoc documentation, and bonus features like reviews, ratings, and wishlists.
@@ -245,3 +246,74 @@ Import `postman/Bookstore_API.postman_collection.json` into Postman. It includes
 - **Global exception handler** (`core/exceptions.py`) returns a consistent JSON envelope for all 400/401/403/404/429/500 errors.
 - **Throttling**: scoped rate limits for `auth`, `books`, and `orders` endpoints (see `REST_FRAMEWORK['DEFAULT_THROTTLE_RATES']` in settings).
 - **Logging**: all requests are logged (console + rotating file in `logs/bookstore.log`) via `core/middleware.py`.
+=======
+# 💼 6-Month Python Internship Projects
+
+## 📌 Overview
+
+This repository contains projects and tasks completed during my **6-month internship** in Python development.
+
+The internship focuses on improving skills in:
+- Python Programming
+- Web Development (Flask)
+- Database Handling
+- Software Testing Basics
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- Flask
+- HTML, CSS, JavaScript
+- SQLite
+- Git & GitHub
+
+---
+
+## 📂 Projects Included
+
+### 1️⃣ Contact Book Application
+- Add, view, and search contacts
+- File handling using Python
+
+### 2️⃣ Online Feedback Collector
+- User feedback form
+- Admin dashboard
+- Database integration
+
+---
+
+## ▶️ How to Run
+
+1. Clone the repository:
+https://github.com/mansiKhule2331/python-intership.git
+
+
+2. Go to project folder:
+cd python-internship
+
+3. Run Python file:python app.py
+
+---
+
+## 📈 Learning Outcomes
+
+- Improved Python fundamentals
+- Built real-world projects
+- Learned basic software testing
+- Understood full-stack development basics
+
+---
+
+## 👩‍💻 Author
+
+Mansi Khule  
+Python Developer  
+
+---
+
+## ⭐ Note
+
+This repository is part of my internship learning journey.
+>>>>>>> d8b3b83102cddc63d43bba686f5b793f9ff51853
